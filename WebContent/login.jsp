@@ -12,27 +12,30 @@
 </head>
 <body>
 	<main class="mdl-grid center-items" style="justify-content:center;">
-		<form class="mdl-cell--4-col mdl-shadow--4dp" style="margin-top:15%; width:30%; min-width:260px;">
+		<form class="mdl-cell--4-col mdl-shadow--4dp" style="margin-top:15%; width:30%; min-width:260px;" method="post" action="login">
 			<hgroup class="mdl-card__title">
 				<h2 class="mdl-card__title-text">Login</h2>
 			</hgroup>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" type="email" id="email">
+				<input class="mdl-textfield__input" type="email" id="email" name="email">
 				<label class="mdl-textfield__label" for="email">Email</label>
 				<span class="mdl-textfield__error">Enter valid email please</span>
 			</div>
 			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-				<input class="mdl-textfield__input" type="password" id="password" pattern="[A-Z,a-z, ]*">
+				<input class="mdl-textfield__input" type="password" id="password" pattern="[A-Z,a-z, ]*" name="password">
 				<label class="mdl-textfield__label" for="password">Password</label>
 				<span class="mdl-textfield__error">Enter valid email please</span>
 			</div>
 			<div style="width:100%;">
 				<div class="mdl-layout-spacer"></div>
-				<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+				<button type="submit" value="login" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
 				  Button
 				</button>
 			</div>		  
 		</form>
+		<% if (request.getAttribute("nologin")!=null){%>
+			<%=(String) request.getAttribute("nologin") %>
+		<%} %>
 	</main>
 </body>
 </html>
