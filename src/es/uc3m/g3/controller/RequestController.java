@@ -11,11 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import es.uc3m.g3.handlers.LoginRequestHandler;
 import es.uc3m.g3.handlers.RequestHandlerInterface;
+import es.uc3m.g3.handlers.UserRequestHandler;
 
 /**
  * Servlet implementation class RequestController
  */
-@WebServlet(urlPatterns={"/login"})
+@WebServlet(urlPatterns={"/login", "/users"})
 public class RequestController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private HashMap <String, RequestHandlerInterface> requestHandlers = new HashMap<String, RequestHandlerInterface>();   
@@ -25,6 +26,7 @@ public class RequestController extends HttpServlet {
     public RequestController() {
         super();
         requestHandlers.put("/login", new LoginRequestHandler());
+        requestHandlers.put("/users", new UserRequestHandler());
     }
 
 	/**
