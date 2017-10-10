@@ -31,7 +31,7 @@
 				<button type="submit" value="login" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
 				  Button
 				</button>
-			</div>		  
+			</div>
 		</form>
 		<% if (request.getAttribute("nologin")!=null){%>
 			<%=(String) request.getAttribute("nologin") %>
