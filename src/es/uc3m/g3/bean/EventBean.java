@@ -3,6 +3,7 @@ import java.util.Date;
 package es.uc3m.g3.bean;
 
 public class EventBean {
+  private String id;
   private String title;
   private String description;
   private Date date;
@@ -14,6 +15,7 @@ public class EventBean {
   private String category;
 
   public String getTitle() { return title; }
+  public String getId() { return id; }
   public String getDescription() { return description; }
   public Date getDate() { return date; }
   public String getLocation() { return location; }
@@ -23,6 +25,7 @@ public class EventBean {
   public double getPrice() { return price; }
   public String getCategory() { return category; }
 
+  public void setId(String id) { this.id = id; }
   public void setTitle(String title) { this.title = title; }
   public void setDescription(String description) {
     this.description = description;
@@ -36,10 +39,11 @@ public class EventBean {
   public void setCategory(String category) { this.category = category; }
 
   public EventBean() { super(); }
-  public EventBean(String title, String description, Date date, String location,
-                   String hall, String image, short tickets, double price,
-                   String category) {
+  public EventBean(String id, String title, String description, Date date,
+                   String location, String hall, String image, short tickets,
+                   double price, String category) {
     super();
+    this.id = id;
     this.title = title;
     this.description = description;
     this.date = date;
