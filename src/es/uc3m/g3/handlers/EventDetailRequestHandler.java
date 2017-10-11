@@ -6,18 +6,19 @@ import javax.servlet.http.HttpServletResponse;
 import es.uc3m.g3.bean.UserBean;
 import es.uc3m.g3.bean.EventBean;
 
-public class EventsRequestHandler
+public class EventsDetilRequestHandler
     extends RestrictedRequestHandler implements RequestHandlerInterface {
 
   @Override
   public String handleRequest(HttpServletRequest request,
                               HttpServletResponse response) {
-    System.out.println("Handling the request in EventsRequestHandler");
+    System.out.println("Handling the request in EventDetailRequestHandler");
     UserBean user = new UserBean(request.getParameter("username"),
                                  request.getParameter("password"));
     if (super.checkRegisteredUser(request, user)) {
-      request.setAttribute("events", getEvents());
-      return "events.jsp";
+      String id = request.getParameter("id");
+      request.setAttribute("eventInfo", getEventById(id));
+      return "eventdetail.jsp";
     } else {
       return "login.jsp";
     }
@@ -28,16 +29,25 @@ public class EventsRequestHandler
 
     Date date = new Date();
 
-    events.add(new EventBean("event1", "Description of event1", date, "UC3M",
-                             "hall1", "/images/image1.png", 2, 6.25,
+    events.add(new EventBean("id001", "event1", "Description of event1", date,
+                             "UC3M", "hall1", "/images/image1.png", 2, 6.25,
                              "CATEGORY"));
-    events.add(new EventBean("event2", "Description of event2", date, "UC3M2",
-                             "hall2", "/images/image2.png", 2, 6.25,
+    events.add(new EventBean("id002", "event2", "Description of event2", date,
+                             "UC3M2", "hall2", "/images/image2.png", 2, 6.25,
                              "CATEGORY"));
-    events.add(new EventBean("event3", "Description of event3", date, "UC3M3",
-                             "hall3", "/images/image3.png", 2, 6.25,
+    events.add(new EventBean("id003", "event3", "Description of event3", date,
+                             "UC3M3", "hall3", "/images/image3.png", 2, 6.25,
                              "CATEGORY"));
 
     return events;
+  }
+
+  private EventBean getEventById(String id) {
+    for (EventBean e : getEvents()) {
+      if (e.getId().equals(id)) {
+        return e;
+      }
+    }
+    return null;
   }
 }
