@@ -13,7 +13,7 @@
 
 <body>
   <main class="mdl-grid center-items">
-    <div class="mdl-cell--10-col mdl-cell--1-offset">
+    <div class="mdl-cell--8-col mdl-cell--2-offset">
       <h2 class="mdl-card__title-text">Listado de eventos</h2>
       <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--4dp">
         <thead>
