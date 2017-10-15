@@ -1,6 +1,7 @@
+package es.uc3m.g3.bean;
+
 import java.util.Date;
 
-package es.uc3m.g3.bean;
 
 public class EventBean {
   private String id;

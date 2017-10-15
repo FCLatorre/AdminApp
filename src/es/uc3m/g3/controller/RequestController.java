@@ -12,11 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import es.uc3m.g3.handlers.LoginRequestHandler;
 import es.uc3m.g3.handlers.RequestHandlerInterface;
 import es.uc3m.g3.handlers.UserRequestHandler;
+import es.uc3m.g3.handlers.EventsRequestHandler;
+import es.uc3m.g3.handlers.EventDetailRequestHandler;
 
 /**
  * Servlet implementation class RequestController
  */
-@WebServlet(urlPatterns = {"/login", "/users"})
+@WebServlet(urlPatterns = {"/login", "/users", "/events", "/eventdetail"})
 public class RequestController extends HttpServlet {
   private static final long serialVersionUID = 1L;
   private HashMap<String, RequestHandlerInterface> requestHandlers =
@@ -28,8 +30,8 @@ public class RequestController extends HttpServlet {
     super();
     requestHandlers.put("/login", new LoginRequestHandler());
     requestHandlers.put("/users", new UserRequestHandler());
-    requestHandlers.put("/events", new EventRequestHandler());
-    requestHandlers.put("/eventdetail", new EventRequestHandler());
+    requestHandlers.put("/events", new EventsRequestHandler());
+    requestHandlers.put("/eventdetail", new EventDetailRequestHandler());
   }
 
   /**
