@@ -40,10 +40,10 @@ public class RequestController extends HttpServlet {
    */
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    System.out.println("Handling the request in RequestController");
+    System.out.println("Handling the request in GETRequestController");
     RequestHandlerInterface rhi = requestHandlers.get(request.getServletPath());
 
-    String view = rhi.handleRequest(request, response);
+    String view = rhi.handleGETRequest(request, response);
 
     request.getRequestDispatcher(view).forward(request, response);
   }
@@ -55,7 +55,11 @@ public class RequestController extends HttpServlet {
   protected void doPost(HttpServletRequest request,
                         HttpServletResponse response)
       throws ServletException, IOException {
-    // TODO Auto-generated method stub
-    doGet(request, response);
+          System.out.println("Handling the request in POSTRequestController");
+          RequestHandlerInterface rhi = requestHandlers.get(request.getServletPath());
+
+          String view = rhi.handlePOSTRequest(request, response);
+
+          request.getRequestDispatcher(view).forward(request, response);
   }
 }

@@ -9,7 +9,7 @@ import es.uc3m.g3.bean.UserBean;
 public class LoginRequestHandler implements RequestHandlerInterface {
 
 	@Override
-	public String handleRequest(HttpServletRequest request, HttpServletResponse response) {
+	public String handleGETRequest(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("Handling the request in LoginRequestHandler");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
@@ -17,23 +17,35 @@ public class LoginRequestHandler implements RequestHandlerInterface {
 			System.out.println("LoginRequestHandler: no parameters");
 			return "login.jsp";
 		}
-		
+
 		if(checkLogin(email, password)){
 			System.out.println("LoginRequestHandler: login correct!");
 			saveUserToSession(request, email, password);
 			return "users.jsp";
 		}else{
 			System.out.println("LoginRequestHandler: login incorrect!");
-			request.setAttribute("nologin", "Usuario y contraseña incorrecta!");
+			request.setAttribute("nologin", "Usuario y contraseï¿½a incorrecta!");
 			return "login.jsp";
 		}
 	}
-	
+	@Override
+	public String handlePOSTRequest(HttpServletRequest request, HttpServletResponse response) {
+		return handleGETRequest(request, response);
+	}
+	@Override
+	public String handlePUTRequest(HttpServletRequest request, HttpServletResponse response) {
+		return handleGETRequest(request, response);
+	}
+	@Override
+	public String handleDELETERequest(HttpServletRequest request, HttpServletResponse response) {
+		return handleGETRequest(request, response);
+	}
+
 	private boolean checkLogin (String email, String password){
 		UserBean user = new UserBean("admin@admin.com", "admin");
 		return user.getEmail().equals(email) && user.getPassword().equals(password);
 	}
-	
+
 	private void saveUserToSession(HttpServletRequest request, String email, String password){
 		HttpSession session = request.getSession();
 		session.setAttribute("user", new UserBean(email, password));

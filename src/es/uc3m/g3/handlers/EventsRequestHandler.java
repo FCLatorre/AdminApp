@@ -13,7 +13,7 @@ public class EventsRequestHandler
     extends RestrictedRequestHandler implements RequestHandlerInterface {
 
   @Override
-  public String handleRequest(HttpServletRequest request,
+  public String handleGETRequest(HttpServletRequest request,
                               HttpServletResponse response) {
     System.out.println("Handling the request in EventsRequestHandler");
     UserBean user = new UserBean(request.getParameter("username"),
@@ -24,6 +24,19 @@ public class EventsRequestHandler
     } else {
       return "login.jsp";
     }
+  }
+
+  @Override
+  public String handlePOSTRequest(HttpServletRequest request, HttpServletResponse response) {
+      return handleGETRequest(request, response);
+  }
+  @Override
+  public String handlePUTRequest(HttpServletRequest request, HttpServletResponse response) {
+      return handleGETRequest(request, response);
+  }
+  @Override
+  public String handleDELETERequest(HttpServletRequest request, HttpServletResponse response) {
+      return handleGETRequest(request, response);
   }
 
   private ArrayList<EventBean> getEvents() {
