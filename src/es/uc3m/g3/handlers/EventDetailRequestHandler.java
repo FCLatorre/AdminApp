@@ -20,7 +20,7 @@ public class EventDetailRequestHandler
                                  request.getParameter("password"));
     if (super.checkRegisteredUser(request, user)) {
       String id = request.getParameter("id");
-      request.setAttribute("eventInfo", getEventById(id));
+      request.setAttribute("event", getEventById(id));
       return "eventdetail.jsp";
     } else {
       return "login.jsp";

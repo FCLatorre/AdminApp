@@ -49,7 +49,7 @@
                           <td class="mdl-data-table__cell--non-numeric"><%=event.getLocation()%>-<%=event.getHall()%></td>
                           <td><%=event.getTickets()%></td>
                           <td>
-                            <a href="eventdatail?id=<%=event.getId()%>"><button class="mdl-button mdl-js-button mdl-button--icon">
+                            <a href="eventdetail?id=<%=event.getId()%>"><button class="mdl-button mdl-js-button mdl-button--icon">
                               <i class="material-icons">remove_red_eye</i>
                             </button></a>
                           </td>
