@@ -62,4 +62,19 @@ public class RequestController extends HttpServlet {
 
           request.getRequestDispatcher(view).forward(request, response);
   }
+
+  /**
+   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+   * response)
+   */
+  protected void doDelete(HttpServletRequest request,
+                        HttpServletResponse response)
+      throws ServletException, IOException {
+          System.out.println("Handling the request in DELETERequestController");
+          RequestHandlerInterface rhi = requestHandlers.get(request.getServletPath());
+
+          String view = rhi.handleDELETERequest(request, response);
+
+        //   request.getRequestDispatcher(view).forward(request, response);
+  }
 }
