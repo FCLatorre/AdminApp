@@ -9,21 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 import es.uc3m.g3.bean.UserBean;
 import es.uc3m.g3.bean.EventBean;
 
-public class EventsRequestHandler
-    extends RestrictedRequestHandler implements RequestHandlerInterface {
+public class EventsRequestHandler implements RequestHandlerInterface {
 
   @Override
   public String handleGETRequest(HttpServletRequest request,
                               HttpServletResponse response) {
-    System.out.println("Handling the request in EventsRequestHandler");
-    UserBean user = new UserBean(request.getParameter("username"),
-                                 request.getParameter("password"));
-    if (super.checkRegisteredUser(request, user)) {
-      request.setAttribute("events", getEvents());
-      return "events.jsp";
-    } else {
-      return "login.jsp";
-    }
+	  System.out.println("Handling the request in EventsRequestHandler");
+	  request.setAttribute("events", getEvents());
+	  return "events.jsp";
   }
 
   @Override

@@ -8,22 +8,16 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import es.uc3m.g3.bean.UserBean;
 import es.uc3m.g3.bean.EventBean;
 
-public class EventDetailRequestHandler extends RestrictedRequestHandler implements RequestHandlerInterface {
+public class EventDetailRequestHandler implements RequestHandlerInterface {
 
 	@Override
 	public String handleGETRequest(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("Handling the request in EventDetailGETRequestHandler");
-		UserBean user = new UserBean(request.getParameter("username"), request.getParameter("password"));
-		if (super.checkRegisteredUser(request, user)) {
-			String id = request.getParameter("id");
-			request.setAttribute("event", getEventById(id));
-			return "eventdetail.jsp";
-		} else {
-			return "login.jsp";
-		}
+		String id = request.getParameter("id");
+		request.setAttribute("event", getEventById(id));
+		return "eventdetail.jsp";
 	}
 
 	@Override
