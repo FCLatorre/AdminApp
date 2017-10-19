@@ -9,12 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import es.uc3m.g3.handlers.LoginRequestHandler;
-import es.uc3m.g3.handlers.RequestHandlerInterface;
-import es.uc3m.g3.handlers.UserRequestHandler;
-import es.uc3m.g3.handlers.EventsRequestHandler;
-import es.uc3m.g3.handlers.EventDetailRequestHandler;
-
+import es.uc3m.g3.handlers.*;
 /**
  * Servlet implementation class RequestController
  */
@@ -32,6 +27,7 @@ public class RequestController extends HttpServlet {
     requestHandlers.put("/users", new UserRequestHandler());
     requestHandlers.put("/events", new EventsRequestHandler());
     requestHandlers.put("/eventdetail", new EventDetailRequestHandler());
+    requestHandlers.put("/conversations", new ConversationsRequestHandler());
   }
 
   /**
