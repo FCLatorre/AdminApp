@@ -23,8 +23,10 @@ public class LoginRequestHandler implements RequestHandlerInterface {
 			System.out.println("LoginRequestHandler: login correct!");
 			saveUserToSession(request, email, password);
 			String newURL = (String) request.getSession().getAttribute("from");
-			newURL.replaceAll("/", "");
-			newURL = newURL + ".jsp";
+			request.getSession().setAttribute("from", null);
+			if(newURL==null){
+				newURL="users";
+			}
 			return newURL;
 		}else{
 			System.out.println("LoginRequestHandler: login incorrect!");
