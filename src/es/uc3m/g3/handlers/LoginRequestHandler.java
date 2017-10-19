@@ -15,16 +15,20 @@ public class LoginRequestHandler implements RequestHandlerInterface {
 		String password = request.getParameter("password");
 		if(email == null || password== null) {
 			System.out.println("LoginRequestHandler: no parameters");
+			request.setAttribute("nologin", "No parameters where received");
 			return "login.jsp";
 		}
 
 		if(checkLogin(email, password)){
 			System.out.println("LoginRequestHandler: login correct!");
 			saveUserToSession(request, email, password);
-			return "users.jsp";
+			String newURL = (String) request.getSession().getAttribute("from");
+			newURL.replaceAll("/", "");
+			newURL = newURL + ".jsp";
+			return newURL;
 		}else{
 			System.out.println("LoginRequestHandler: login incorrect!");
-			request.setAttribute("nologin", "Usuario y contrase�a incorrecta!");
+			request.setAttribute("nologin", "Incorrect username or password");
 			return "login.jsp";
 		}
 	}
