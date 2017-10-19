@@ -7,7 +7,7 @@ public class UserRequestHandler implements RequestHandlerInterface {
 
 	@Override
 	public String handleGETRequest(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("Handling the request in LoginRequestHandler");
+		System.out.println("Handling the request in UserRequestHandler");
 		return "users.jsp";
 	}
 

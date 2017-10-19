@@ -13,7 +13,7 @@ import es.uc3m.g3.handlers.*;
 /**
  * Servlet implementation class RequestController
  */
-@WebServlet(urlPatterns = {"/login", "/users", "/events", "/eventdetail"})
+@WebServlet(urlPatterns = {"/login", "/users", "/events", "/eventdetail", "/conversations"})
 public class RequestController extends HttpServlet {
   private static final long serialVersionUID = 1L;
   private HashMap<String, RequestHandlerInterface> requestHandlers =
