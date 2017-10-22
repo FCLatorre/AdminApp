@@ -28,6 +28,7 @@ public class RequestController extends HttpServlet {
     requestHandlers.put("/users", new UserRequestHandler());
     requestHandlers.put("/events", new EventsRequestHandler());
     requestHandlers.put("/eventdetail", new EventDetailRequestHandler());
+    requestHandlers.put("/delete/eventdetail", new EventDetailRequestHandler());
     requestHandlers.put("/conversations", new ConversationsRequestHandler());
   }
 
