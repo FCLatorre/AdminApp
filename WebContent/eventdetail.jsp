@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*,es.uc3m.g3.bean.EventBean" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,6 +12,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
       <link rel="stylesheet" href="styles.css">
+      <link rel="stylesheet" href="popup.css">
   <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 </head>
 
@@ -17,13 +20,14 @@
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
         <jsp:include page="header.jsp">
         	<jsp:param name="title" value="Event Detail"/>
-    	</jsp:include>
+    	   </jsp:include>
         <main class="mdl-layout__content mdl-color--grey-100">
             <div class="mdl-grid demo-content">
-                <form action="eventdetail" method="post" class="mdl-cell--8-col mdl-cell--2-offset" id="event-form">
+                <form class="mdl-cell--8-col mdl-cell--2-offset" id="event-form">
                 <%EventBean event = (EventBean) request.getAttribute("event"); %>
+                <%SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy"); %>
                     <hgroup class="mdl-card__title">
-                        <h2 class="mdl-card__title-text">Estos son los datos del&nbsp;<b><%=event.getTitle()%></b></h2>
+                        <h2 class="mdl-card__title-text">Estos son los datos de&nbsp;<b><%=event.getTitle()%></b></h2>
                     </hgroup>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" pattern="([A-Z,a-z]*\d*)*" name="id" value="<%=event.getId()%>" readonly/>
@@ -46,9 +50,9 @@
                         <span class="mdl-textfield__error">Introduzca el precio del evento con punto como separaciï¿½n decimal.</span>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" pattern="\d{2}/\d{2}/\d{4}" name="date" value="<%=event.getDate()%>" readonly/>
+                        <input class="mdl-textfield__input" type="text" pattern="\d{2}/\d{2}/\d{4}" name="date" value="<%=df.format(event.getDate())%>" readonly/>
                         <label class="mdl-textfield__label" for="date">Fecha y hora</label>
-                        <span class="mdl-textfield__error">Introduzca la fecha en el sigueinte formato: dd/mm/yy</span>
+                        <span class="mdl-textfield__error">Introduzca la fecha en el sigueinte formato: dd/mm/yyyy</span>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" name="location" value="<%=event.getLocation()%>" readonly/>
@@ -69,66 +73,54 @@
                         <input type="file" name="img" class="mdl-textfield__input" accept="image/*" disabled/>
                         <span class="mdl-textfield__error">Elija un archivo.</span>
                     </div>
+                    <div class = "mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                     <textarea class = "mdl-textfield__input" type="text" rows= "5"
+                        name="description" readonly><%=event.getDescription()%></textarea>
+                      <label class="mdl-textfield__label" for="description">Descripción</label>
+                      <span class="mdl-textfield__error">Introduzca la descripción</span>
+                  </div>
                     <button id="edit-event" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Modificar
                     </button>
-                    <button id="save-event" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" formaction="eventdetail" formmethod="post">Guardar</button>
-                    <button id="delete-event" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" formaction="eventdetail" formmethod="delete">Eliminar evento</button>
-                    <div id="delete-event-snackbar" class="mdl-js-snackbar mdl-snackbar">
-                      <div class="mdl-snackbar__text"></div>
-                      <button class="mdl-snackbar__action" type="button"></button>
-                    </div>
+                    <button id="save-event" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" type="submit" formaction="eventdetail" formmethod="post" disabled>Guardar</button>
+                    <button id="delete-event" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" formaction="delete/eventdetail" formmethod="post">Eliminar evento</button>
                 </form>
             </div>
         </main>
-    </div>
+        <div id="popup">
+        <jsp:include page="popup.jsp">
+          <jsp:param name="title" value="Borrado de evento"/>
+          <jsp:param name="text" value="¿Está seguro de que desea borra el evento?" />
+          <jsp:param name="description" value="Si borra el evento, no lo podrá recuperar."/>
+         </jsp:include>
+       </div>
+      </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script>
-    $("#edit-event").on("click", function() {
-        $("input").prop("readonly", false);
-        $("#save-event").prop("disabled", false);
-        $(this).prop("disabled", true);
-        $(this).removeClass("mdl-button--accent");
-        $("#save-event").addClass("mdl-button--accent");
+    $('#edit-event').on('click', function() {
+        $('input').prop('readonly', false);
+        $('input').prop('disabled', false);
+        $('#save-event').prop('disabled', false);
+        $(this).prop('disabled', true);
+        $(this).removeClass('mdl-button--accent');
+        $('#save-event').addClass('mdl-button--accent');
     });
-    $("#save-event").on("click", function() {
-        $("input").prop("readonly", true);
-        $("#edit-event").prop("disabled", false);
-        $(this).prop("disabled", true);
-        $(this).removeClass("mdl-button--accent");
-        $("#edit-event").addClass("mdl-button--accent");
-    });
-    // $('#event-form').submit(function(e){
-    //     e.preventDefault();
-    //     $.ajax({
-    //         url:'eventdetail?id=id001',
-    //         type:'delete',
-    //         // data:$('#event-form').serialize(),
-    //         success:function(){
-    //             //whatever you wanna do after the form is successfully submitted
-    //         }
-    //     });
-    // });
-    (function() {
-      'use strict';
-      var snackbarContainer = document.querySelector('#delete-event-snackbar');
-      var showSnackbarButton = document.querySelector('#delete-event');
-      var handler = function(event) {
-        showSnackbarButton.style.backgroundColor = '';
 
-      };
-      showSnackbarButton.addEventListener('click', function() {
-        'use strict';
-        var data = {
-          message: '¿Está seguro de eliminar el evento?',
-          timeout: 3000,
-          actionHandler: handler,
-          actionText: 'Aceptar'
-        };
-        snackbarContainer.MaterialSnackbar.showSnackbar(data);
+    $('#delete-event').on('click', function(e){
+      $('#popup').addClass("fab active");
+      e.preventDefault();
+      popup(function(confirm){
+        if(confirm){
+          $('#event-form').attr('action', 'delete/eventdetail');
+          $('#event-form').attr('method', 'post');
+          $('#event-form').unbind('submit').submit()
+        } else {
+          $('#popup').removeClass("fab active");
+        }
       });
-    }());
+    });
+
 </script>
 
 </html>

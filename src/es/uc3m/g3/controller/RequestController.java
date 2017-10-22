@@ -13,7 +13,8 @@ import es.uc3m.g3.handlers.*;
 /**
  * Servlet implementation class RequestController
  */
-@WebServlet(urlPatterns = {"/login", "/users", "/events", "/eventdetail", "/conversations"})
+@WebServlet(urlPatterns = {"/login", "/users", "/events", "/eventdetail",
+                           "/delete/eventdetail", "/conversations"})
 public class RequestController extends HttpServlet {
   private static final long serialVersionUID = 1L;
   private HashMap<String, RequestHandlerInterface> requestHandlers =
@@ -51,26 +52,18 @@ public class RequestController extends HttpServlet {
   protected void doPost(HttpServletRequest request,
                         HttpServletResponse response)
       throws ServletException, IOException {
-          System.out.println("Handling the request in POSTRequestController");
-          RequestHandlerInterface rhi = requestHandlers.get(request.getServletPath());
+    System.out.println("Handling the request in POSTRequestController");
+    RequestHandlerInterface rhi = requestHandlers.get(request.getServletPath());
 
-          String view = rhi.handlePOSTRequest(request, response);
+    String redirect;
 
-          request.getRequestDispatcher(view).forward(request, response);
-  }
+    int deletePath = request.getServletPath().indexOf("delete");
+    if (deletePath != -1) {
+      redirect = rhi.handleDELETERequest(request, response);
+    } else {
+      redirect = rhi.handlePOSTRequest(request, response);
+    }
 
-  /**
-   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-   * response)
-   */
-  protected void doDelete(HttpServletRequest request,
-                        HttpServletResponse response)
-      throws ServletException, IOException {
-          System.out.println("Handling the request in DELETERequestController");
-          RequestHandlerInterface rhi = requestHandlers.get(request.getServletPath());
-
-          String view = rhi.handleDELETERequest(request, response);
-
-        //   request.getRequestDispatcher(view).forward(request, response);
+    response.sendRedirect(redirect);
   }
 }
