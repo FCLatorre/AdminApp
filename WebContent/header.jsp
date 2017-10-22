@@ -39,10 +39,9 @@
         </div>
     </header>
     <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-        <a class="mdl-navigation__link" href="profile"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">account_box</i>Datos Personales</a>
         <a class="mdl-navigation__link" href="events"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">card_membership</i>Eventos</a>
-        <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">date_range</i>Usuarios</a>
-        <a class="mdl-navigation__link" href="users"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Chat</a>
+        <a class="mdl-navigation__link" href="users"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">date_range</i>Usuarios</a>
+        <a class="mdl-navigation__link" href="conversations"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Chat</a>
         <div class="mdl-layout-spacer"></div>
         <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span></a>
     </nav>

@@ -8,11 +8,10 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import es.uc3m.g3.bean.UserBean;
 import es.uc3m.g3.bean.EventBean;
 
-public class EventDetailRequestHandler
-    extends RestrictedRequestHandler implements RequestHandlerInterface {
+<<<<<<< HEAD
+public class EventDetailRequestHandler implements RequestHandlerInterface {
 
   @Override
   public String handleGETRequest(HttpServletRequest request,
@@ -118,4 +117,3 @@ public class EventDetailRequestHandler
     EventBean deleteEvent = null;
     return deleteEvent;
   }
-}
