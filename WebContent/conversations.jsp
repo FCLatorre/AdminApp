@@ -6,7 +6,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
   <meta charset="ISO-8859-1">
-  <title>Users</title>
+  <title>Conversations</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
       <link rel="stylesheet" href="styles.css">
@@ -17,12 +17,12 @@
 
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
         <jsp:include page="header.jsp">
-            <jsp:param name="title" value="Users"/>
+            <jsp:param name="title" value="Conversations"/>
         </jsp:include>
         <main class="mdl-layout__content mdl-color--grey-100">
             <div class="mdl-grid demo-content center-items">
                 <div class="mdl-cell--8-col mdl-cell--2-offset">
-                  <h2 class="mdl-card__title-text">Listado de usuarios</h2>
+                  <h2 class="mdl-card__title-text">Listado de conversaciones</h2>
                   
 
                 </div>
