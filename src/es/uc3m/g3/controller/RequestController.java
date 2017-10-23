@@ -1,6 +1,10 @@
 package es.uc3m.g3.controller;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -8,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 import es.uc3m.g3.handlers.*;
 /**
@@ -19,12 +24,28 @@ public class RequestController extends HttpServlet {
   private static final long serialVersionUID = 1L;
   private HashMap<String, RequestHandlerInterface> requestHandlers =
       new HashMap<String, RequestHandlerInterface>();
+  private Connection con;
+  private Statement  st;
+  private ResultSet rs;
+  private String serverName = "localhost";
+  private String port = "3306";
+  private String database = "tiwgrupo3";
+  private String username = "root";
+  private String password = "admin";
   /**
    * @see HttpServlet#HttpServlet()
    */
   public RequestController() {
     super();
-    requestHandlers.put("/login", new LoginRequestHandler());
+    try {
+    	Class.forName("com.mysql.jdbc.Driver").newInstance();
+    	con = DriverManager.getConnection("jdbc:mysql://"+ serverName+":"+ port+"/"+database, username, password);
+    	System.out.println("Sucessful connection");
+    } 
+    catch (Exception e) {
+    	System.out.println("Error when connecting to the database ");
+    }
+    requestHandlers.put("/login", new LoginRequestHandler(con));
     requestHandlers.put("/users", new UserRequestHandler());
     requestHandlers.put("/events", new EventsRequestHandler());
     requestHandlers.put("/eventdetail", new EventDetailRequestHandler());
