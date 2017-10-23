@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import es.uc3m.g3.bean.UserBean;
 
@@ -72,8 +71,7 @@ public class LoginRequestHandler implements RequestHandlerInterface {
 	}
 
 	private void saveUserToSession(HttpServletRequest request, String email, String password){
-		HttpSession session = request.getSession();
-		session.setAttribute("user", new UserBean(email, password));
+		request.getSession().setAttribute("user", new UserBean(email, password));
 	}
 
 }

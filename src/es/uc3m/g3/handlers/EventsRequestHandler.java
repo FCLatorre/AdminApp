@@ -6,7 +6,6 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import es.uc3m.g3.bean.UserBean;
 import es.uc3m.g3.bean.EventBean;
 
 public class EventsRequestHandler implements RequestHandlerInterface {
