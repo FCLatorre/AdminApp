@@ -1,5 +1,10 @@
 package es.uc3m.g3.handlers;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -7,7 +12,12 @@ import javax.servlet.http.HttpSession;
 import es.uc3m.g3.bean.UserBean;
 
 public class LoginRequestHandler implements RequestHandlerInterface {
-
+	private Connection con;
+	
+	public LoginRequestHandler(Connection con){
+		super();
+		this.con = con;
+	}
 	@Override
 	public String handleGETRequest(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("Handling the request in LoginRequestHandler");
@@ -48,8 +58,17 @@ public class LoginRequestHandler implements RequestHandlerInterface {
 	}
 
 	private boolean checkLogin (String email, String password){
-		UserBean user = new UserBean("admin@admin.com", "admin");
-		return user.getEmail().equals(email) && user.getPassword().equals(password);
+		try{
+			PreparedStatement ps = con.prepareStatement("select * from EntidadRol where Email=? and Contraseña=SHA1(?)");
+			ps.setString(1, email);
+			ps.setString(2, password);
+			ResultSet rs = ps.executeQuery();
+			boolean bool = rs.next()!=false;
+			ps.close();
+			return bool;
+		} catch (SQLException e){
+			return false;
+		}
 	}
 
 	private void saveUserToSession(HttpServletRequest request, String email, String password){
