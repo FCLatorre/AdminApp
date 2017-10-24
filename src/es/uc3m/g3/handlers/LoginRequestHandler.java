@@ -58,13 +58,22 @@ public class LoginRequestHandler implements RequestHandlerInterface {
 
 	private boolean checkLogin (String email, String password){
 		try{
-			PreparedStatement ps = con.prepareStatement("select * from EntidadRol where Email=? and Contraseña=SHA1(?)");
+			PreparedStatement ps = con.prepareStatement("select * from EntidadAdministrador where Id=SHA1(?)");
 			ps.setString(1, email);
-			ps.setString(2, password);
 			ResultSet rs = ps.executeQuery();
-			boolean bool = rs.next()!=false;
-			ps.close();
-			return bool;
+			if(rs.next()){
+				System.out.println("El usuario es un administrador. Recuperando información de login...");
+				ps = con.prepareStatement("select * from EntidadRol where Email=? and Contraseña=SHA1(?)");
+				ps.setString(1, email);
+				ps.setString(2, password);
+				rs = ps.executeQuery();
+				boolean bool = rs.next()!=false;
+				ps.close();
+				return bool;
+			} else {
+				System.out.println("El usuario no es un administrador de esta aplicación");
+				return false;
+			}
 		} catch (SQLException e){
 			return false;
 		}
