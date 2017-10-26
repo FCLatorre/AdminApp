@@ -86,6 +86,7 @@ public class RequestController extends HttpServlet {
       redirect = rhi.handlePOSTRequest(request, response);
     }
 
-    response.sendRedirect(redirect);
+    //response.sendRedirect(redirect);
+    request.getRequestDispatcher(redirect).forward(request, response);
   }
 }

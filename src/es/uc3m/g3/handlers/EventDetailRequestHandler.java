@@ -72,7 +72,7 @@ public class EventDetailRequestHandler implements RequestHandlerInterface {
     String id = (String)request.getParameter("id");
     deleteEvent(id);
     System.out.println("Deleting event" + id);
-    return "/AdminApp/events";
+    return "events";
   }
 
   private ArrayList<EventBean> getEvents() {
