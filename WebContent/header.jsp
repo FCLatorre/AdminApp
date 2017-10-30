@@ -35,6 +35,7 @@
                 <li class="mdl-menu__item">hello@example.com</li>
                 <li class="mdl-menu__item">info@example.com</li>
                 <li class="mdl-menu__item"><i class="material-icons">add</i>Add another account...</li>
+                <li class="mdl-menu__item"><a href="logout"><i class="material-icons">add</i>Logout </a></li>
             </ul>
         </div>
     </header>
