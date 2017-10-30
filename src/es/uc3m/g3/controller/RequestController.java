@@ -2,44 +2,53 @@ package es.uc3m.g3.controller;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.SQLException;
 import java.util.HashMap;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
-
-import es.uc3m.g3.handlers.*;
+import es.uc3m.g3.handlers.ConversationsRequestHandler;
+import es.uc3m.g3.handlers.EventDetailRequestHandler;
+import es.uc3m.g3.handlers.EventsRequestHandler;
+import es.uc3m.g3.handlers.LoginRequestHandler;
+import es.uc3m.g3.handlers.LogoutRequestHandler;
+import es.uc3m.g3.handlers.RequestHandlerInterface;
+import es.uc3m.g3.handlers.UserRequestHandler;
 /**
  * Servlet implementation class RequestController
  */
 @WebServlet(urlPatterns = {"/login", "/users", "/events", "/eventdetail",
-                           "/delete/eventdetail", "/conversations"})
+                           "/delete/eventdetail", "/conversations", "/logout"})
 public class RequestController extends HttpServlet {
   private static final long serialVersionUID = 1L;
   private HashMap<String, RequestHandlerInterface> requestHandlers =
       new HashMap<String, RequestHandlerInterface>();
   private Connection con;
-  private Statement  st;
-  private ResultSet rs;
+  /*
   private String serverName = "localhost";
   private String port = "3306";
   private String database = "tiwgrupo3";
   private String username = "root";
   private String password = "admin";
+  */
   /**
    * @see HttpServlet#HttpServlet()
    */
   public RequestController() {
     super();
     try {
-    	Class.forName("com.mysql.jdbc.Driver").newInstance();
-    	con = DriverManager.getConnection("jdbc:mysql://"+ serverName+":"+ port+"/"+database, username, password);
+    	//Class.forName("com.mysql.jdbc.Driver").newInstance();
+    	//con = DriverManager.getConnection("jdbc:mysql://"+ serverName+":"+ port+"/"+database, username, password);
+    	Context ctx = new InitialContext();
+    	DataSource ds = (DataSource) ctx.lookup("jdbc/tiwgrupo3DataSource");
+    	con = ds.getConnection();
     	System.out.println("Sucessful connection");
     } 
     catch (Exception e) {
@@ -51,6 +60,7 @@ public class RequestController extends HttpServlet {
     requestHandlers.put("/eventdetail", new EventDetailRequestHandler());
     requestHandlers.put("/delete/eventdetail", new EventDetailRequestHandler());
     requestHandlers.put("/conversations", new ConversationsRequestHandler());
+    requestHandlers.put("/logout", new LogoutRequestHandler());
   }
 
   /**
@@ -88,5 +98,15 @@ public class RequestController extends HttpServlet {
 
     //response.sendRedirect(redirect);
     request.getRequestDispatcher(redirect).forward(request, response);
+  }
+  
+  public void destroy(){
+	  try {
+			System.out.println("Closing the database connection...");
+			this.con.close();
+	  } catch (SQLException e) {
+			System.out.println("Error closing database connection!");
+			e.printStackTrace();
+		}
   }
 }
