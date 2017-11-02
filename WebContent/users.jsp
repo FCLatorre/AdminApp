@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="java.util.*,es.uc3m.g3.bean.EventBean" %>
+<%@ page import="java.util.*,es.uc3m.g3.entities.EntidadUsuario" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,7 +23,37 @@
             <div class="mdl-grid demo-content center-items">
                 <div class="mdl-cell--8-col mdl-cell--2-offset">
                   <h2 class="mdl-card__title-text">Listado de usuarios</h2>
-                  
+                  <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--4dp">
+                    <thead>
+                      <tr>
+                        <th class="mdl-data-table__cell--non-numeric">Nombre</th>
+                        <th class="mdl-data-table__cell--non-numeric">Apellidos</th>
+                        <th></th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <%
+            	         List<EntidadUsuario> users = (List<EntidadUsuario>) request.getAttribute("users");
+            	          for(EntidadUsuario user : users) { %>
+
+                        <tr>
+                          <td class="mdl-data-table__cell--non-numeric"><%=user.getNombre()%></td>
+                          <td class="mdl-data-table__cell--non-numeric"><%=user.getApellidos()%></td>
+                          <td>
+                            <a href="userdetail?id=<%=user.getId()%>"><button class="mdl-button mdl-js-button mdl-button--icon">
+                              <i class="material-icons">remove_red_eye</i>
+                            </button></a>
+                          </td>
+                          <td>
+                            <button class="mdl-button mdl-js-button mdl-button--icon">
+                              <i class="material-icons">clear</i>
+                            </button>
+                          </td>
+                        </tr>
+                      <%} %>
+                    </tbody>
+                  </table>
 
                 </div>
             </div>
