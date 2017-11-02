@@ -5,14 +5,20 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+import javax.annotation.Resource;
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import javax.transaction.UserTransaction;
 
 import es.uc3m.g3.handlers.ConversationsRequestHandler;
 import es.uc3m.g3.handlers.EventDetailRequestHandler;
@@ -28,9 +34,17 @@ import es.uc3m.g3.handlers.UserRequestHandler;
                            "/delete/eventdetail", "/conversations", "/logout"})
 public class RequestController extends HttpServlet {
   private static final long serialVersionUID = 1L;
-  private HashMap<String, RequestHandlerInterface> requestHandlers =
-      new HashMap<String, RequestHandlerInterface>();
+  private HashMap<String, RequestHandlerInterface> requestHandlers = new HashMap<String, RequestHandlerInterface>();
   private Connection con;
+  
+  private EntityManagerFactory factory;
+  
+  @PersistenceContext(unitName="tiwgrupo3")
+  private EntityManager em;
+  
+  @Resource
+  private UserTransaction ut;
+  
   /*
   private String serverName = "localhost";
   private String port = "3306";
@@ -54,8 +68,12 @@ public class RequestController extends HttpServlet {
     catch (Exception e) {
     	System.out.println("Error when connecting to the database ");
     }
+    
+    factory = Persistence.createEntityManagerFactory("tiwgrupo3");
+    em = factory.createEntityManager();
+    
     requestHandlers.put("/login", new LoginRequestHandler(con));
-    requestHandlers.put("/users", new UserRequestHandler());
+    requestHandlers.put("/users", new UserRequestHandler(em, ut));
     requestHandlers.put("/events", new EventsRequestHandler());
     requestHandlers.put("/eventdetail", new EventDetailRequestHandler());
     requestHandlers.put("/delete/eventdetail", new EventDetailRequestHandler());
