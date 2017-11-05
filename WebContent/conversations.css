@@ -1,0 +1,110 @@
+#conversations {
+  background-color: #EFEFEF;
+}
+.conversation {
+  width: 100%;
+  padding: 25px;
+}
+
+.conversation span {
+  margin-left: 5%;
+}
+
+.conversation.active {
+  background-color: #3F51B5;
+  color: white;
+}
+
+/** chat **/
+.wrapper {
+  height: auto;
+  width: 100%;
+  overflow: hidden;
+  background-color: white;
+  position: relative;
+}
+.wrapper .inner {
+  overflow: scroll;
+  height: 520px;
+  padding-top: 64px;
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
+}
+.wrapper .inner::-webkit-scrollbar {
+  width: 0 !important;
+}
+.wrapper .inner .content {
+  padding: 10.66667px;
+  position: relative;
+  margin-bottom: 32px;
+}
+
+.bottom {
+  height: 64px;
+  background: #ffffff;
+  padding: 20px 5%;
+  border-top: solid 3px;
+  position: absolute;
+  bottom: 0;
+  width: 90%;
+
+}
+.bottom .send {
+  width: calc(100% - 64px);
+}
+
+.message-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  margin: 10.66667px 0;
+  padding: 10.66667px 0;
+}
+.message-wrapper .circle-wrapper {
+  height: 42.66667px;
+  width: 42.66667px;
+  border-radius: 50%;
+}
+.message-wrapper .text-wrapper {
+  padding: 10.66667px;
+  min-height: 42.66667px;
+  width: 60%;
+  margin: 0 10.66667px;
+  box-shadow: 0px 1px 0px 0px rgba(50, 50, 50, 0.3);
+  border-radius: 2px;
+  position: relative;
+  word-break: break-all;
+}
+.message-wrapper .text-wrapper:before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+.message-wrapper.them .circle-wrapper, .message-wrapper.them .text-wrapper {
+  background: #3F51B5;
+  float: left;
+  color: #ffffff;
+}
+.message-wrapper.them .text-wrapper:before {
+  border-width: 0 10px 10px 0;
+  border-color: transparent #3F51B5 transparent transparent;
+  position: absolute;
+  top: 0;
+  left: -9px;
+}
+.message-wrapper.me .circle-wrapper, .message-wrapper.me .text-wrapper {
+  background: #e91e63;
+  float: right;
+  color: #ffffff;
+}
+.message-wrapper.me .text-wrapper {
+  background: #e91e63;
+}
+.message-wrapper.me .text-wrapper:before {
+  border-width: 10px 10px 0 0;
+  border-color: #e91e63 transparent transparent transparent;
+  position: absolute;
+  top: 0;
+  right: -9px;
+}
