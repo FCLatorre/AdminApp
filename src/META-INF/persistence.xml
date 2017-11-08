@@ -4,6 +4,8 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>jdbc/tiwgrupo3DataSource</jta-data-source>
 		<class>es.uc3m.g3.entities.EntidadUsuario</class>
+		<class>es.uc3m.g3.entities.EntidadAdministrador</class>
+		<class>es.uc3m.g3.entities.Conversacion</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="FINE"/>
 			<property name="javax.persistence.schema-generation.database.action" value="none"/>
