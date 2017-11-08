@@ -77,7 +77,7 @@ public class RequestController extends HttpServlet {
     requestHandlers.put("/events", new EventsRequestHandler());
     requestHandlers.put("/eventdetail", new EventDetailRequestHandler());
     requestHandlers.put("/delete/eventdetail", new EventDetailRequestHandler());
-    requestHandlers.put("/conversations", new ConversationsRequestHandler());
+    requestHandlers.put("/conversations", new ConversationsRequestHandler(em, ut));
     requestHandlers.put("/logout", new LogoutRequestHandler());
   }
 
@@ -126,5 +126,6 @@ public class RequestController extends HttpServlet {
 			System.out.println("Error closing database connection!");
 			e.printStackTrace();
 		}
+	  this.factory.close();
   }
 }
