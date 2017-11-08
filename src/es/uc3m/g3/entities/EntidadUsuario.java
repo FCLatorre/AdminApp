@@ -2,6 +2,7 @@ package es.uc3m.g3.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -23,6 +24,10 @@ public class EntidadUsuario implements Serializable {
 
 	@Column(name="Nombre")
 	private String nombre;
+
+	//bi-directional many-to-one association to Conversacion
+	@OneToMany(mappedBy="entidadUsuario")
+	private List<Conversacion> conversacions;
 
 	public EntidadUsuario() {
 	}
@@ -49,6 +54,28 @@ public class EntidadUsuario implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public List<Conversacion> getConversacions() {
+		return this.conversacions;
+	}
+
+	public void setConversacions(List<Conversacion> conversacions) {
+		this.conversacions = conversacions;
+	}
+
+	public Conversacion addConversacion(Conversacion conversacion) {
+		getConversacions().add(conversacion);
+		conversacion.setEntidadUsuario(this);
+
+		return conversacion;
+	}
+
+	public Conversacion removeConversacion(Conversacion conversacion) {
+		getConversacions().remove(conversacion);
+		conversacion.setEntidadUsuario(null);
+
+		return conversacion;
 	}
 
 }
