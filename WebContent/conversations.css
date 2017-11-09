@@ -2,7 +2,7 @@
   background-color: #EFEFEF;
 }
 .conversation {
-  width: 100%;
+  width: calc(100% - 25px -25px);
   padding: 25px;
 }
 
@@ -13,6 +13,11 @@
 .conversation.active {
   background-color: #3F51B5;
   color: white;
+}
+
+.no-style {
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
 /** chat **/

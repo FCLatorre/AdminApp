@@ -20,10 +20,10 @@
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label send">
       <textarea class="mdl-textfield__input" type="text" name="message"></textarea>
       <label class="mdl-textfield__label send" for="message">Mensaje</label>
-    </div>
-    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" type="submit">
-        <i class="material-icons">send</i>
+      <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" type="submit" style="right: -70px;">
+          <i class="material-icons">send</i>
       </button>
-    <!-- <div class="send" id="send"></div> -->
+    </div>
+
   </div>
 </div>

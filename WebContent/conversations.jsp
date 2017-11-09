@@ -30,12 +30,23 @@
 
           for(String conv : conversations) {%>
 
-          <a href="conversations?id=<%=conv%>" class="no-style">
           <div class="conversation <%if (conv.equals(request.getAttribute("id"))) {%>active<%}%>">
-            <img src="images/user.jpg" class="demo-avatar" />
-            <span class="mdl-badge" data-badge="4"><%=conv%></span>
+            <a href="conversations?id=<%=conv%>" class="no-style">
+              <img src="images/user.jpg" class="demo-avatar" />
+              <span class="mdl-badge" data-badge="4"><%=conv%></span>
+            </a>
+
+            <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
+              <i class="material-icons">more_vert</i>
+            </button>
+
+            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                for="demo-menu-lower-right">
+              <li class="mdl-menu__item">Eliminar chat</li>
+              <li class="mdl-menu__item">Marcar como leído</li>
+              <li disabled class="mdl-menu__item">marcar como no leído</li>
+            </ul>
           </div>
-          </a>
 
           <%} %>
         </div>
