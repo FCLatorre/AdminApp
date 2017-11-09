@@ -1,17 +1,26 @@
 package es.uc3m.g3.handlers;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.UserTransaction;
 
-import es.uc3m.g3.bean.EventBean;
+import es.uc3m.g3.entities.Categoria;
+import es.uc3m.g3.entities.Evento;
 
 public class EventDetailRequestHandler implements RequestHandlerInterface {
+	private EntityManager em;
+	private UserTransaction ut;
 
+	public EventDetailRequestHandler (EntityManager em, UserTransaction ut){
+		this.em = em;
+		this.ut = ut;
+	}
   @Override
   public String handleGETRequest(HttpServletRequest request,
                                  HttpServletResponse response) {
@@ -22,92 +31,63 @@ public class EventDetailRequestHandler implements RequestHandlerInterface {
   }
 
   @Override
-  public String handlePOSTRequest(HttpServletRequest request,
-                                  HttpServletResponse response) {
-
+  public String handlePOSTRequest(HttpServletRequest request, HttpServletResponse response) {
     System.out.println("Handling the request in EventDetailPOSTRequestHandler");
-    String id = (String)request.getParameter("id");
-    String name = (String)request.getParameter("eventName");
-    String description = request.getParameter("description");
+    Evento newEvent = new Evento();
+    newEvent.setId(Integer.parseInt(request.getParameter("id")));
+    newEvent.setTitulo(request.getParameter("eventName"));
+    newEvent.setDescripcion(request.getParameter("description"));
+
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    Date date = null;
 
     try {
-      dateFormat.parse(request.getParameter("date"));
+    	newEvent.setFecha(dateFormat.parse(request.getParameter("date")));
     } catch (ParseException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+    	newEvent.setFecha(new Date());
+    	e.printStackTrace();
     }
-    String location = (String)request.getParameter("location");
-    String hall = (String)request.getParameter("hall");
-    String img = (String)request.getParameter("img");
-    Short tickets = Short.parseShort(request.getParameter("tickets"));
-    Double price = Double.parseDouble(request.getParameter("price"));
+    newEvent.setLocalizacion(request.getParameter("location"));
+    newEvent.setSala(request.getParameter("hall"));
+    
+    //newEvent.setImagen(request.getParameter("img"));
+
+    newEvent.setPrecio(new BigDecimal(request.getParameter("price")));
+    newEvent.setNumeroEntradas(Short.parseShort(request.getParameter("tickets")));
+
+    //find categoria o crearla
     String category = (String)request.getParameter("category");
+    Categoria categoriaBean = em.find(Categoria.class, category);
+    if(categoriaBean == null){
+    	categoriaBean = new Categoria();
+    	categoriaBean.setNombre(category);
+    	//persistir nueva categoria?
+    }
+    newEvent.setCategoriaBean(categoriaBean);    
 
-    EventBean newEvent = new EventBean(id, name, description, date, location,
-                                       hall, img, tickets, price, category);
-    EventBean oldEvent = getEventById(id);
+    em.persist(newEvent);
 
-    updateEvent(newEvent, oldEvent);
+    request.setAttribute("id", newEvent.getId());
+    System.out.println("Updating event: " + newEvent.getId());
 
-    request.setAttribute("id", id);
-    System.out.println("Updating event: " + id);
-
-    return "eventdetail?id=" + id;
+    return "eventdetail?id=" + newEvent.getId();
   }
 
   @Override
-  public String handlePUTRequest(HttpServletRequest request,
-                                 HttpServletResponse response) {
+  public String handlePUTRequest(HttpServletRequest request, HttpServletResponse response) {
     return handleGETRequest(request, response);
   }
 
   @Override
-  public String handleDELETERequest(HttpServletRequest request,
-                                    HttpServletResponse response) {
-
-    System.out.println(
-        "Handling the request in EventDetailDELETERequestHandler");
+  public String handleDELETERequest(HttpServletRequest request, HttpServletResponse response) {
+    System.out.println("Handling the request in EventDetailDELETERequestHandler");
     String id = (String)request.getParameter("id");
-    deleteEvent(id);
+    Evento event = getEventById(id);
+    em.remove(event);
     System.out.println("Deleting event" + id);
     return "events";
   }
 
-  private ArrayList<EventBean> getEvents() {
-    ArrayList<EventBean> events = new ArrayList<EventBean>();
-
-    Date date = new Date();
-
-    events.add(new EventBean("id001", "event1", "Description of event1", date,
-                             "UC3M", "hall1", "/images/image1.png", (short)2,
-                             6.25, "CATEGORY"));
-    events.add(new EventBean("id002", "event2", "Description of event2", date,
-                             "UC3M2", "hall2", "/images/image2.png", (short)2,
-                             6.25, "CATEGORY"));
-    events.add(new EventBean("id003", "event3", "Description of event3", date,
-                             "UC3M3", "hall3", "/images/image3.png", (short)2,
-                             6.25, "CATEGORY"));
-
-    return events;
-  }
-
-  private EventBean getEventById(String id) {
-    for (EventBean e : getEvents()) {
-      if (e.getId().equals(id)) {
-        return e;
-      }
-    }
-    return null;
-  }
-
-  private boolean updateEvent(EventBean newEvent, EventBean oldEvent) {
-    return true;
-  }
-
-  private EventBean deleteEvent(String eventId) {
-    EventBean deleteEvent = null;
-    return deleteEvent;
+  private Evento getEventById(String id) {
+    return em.find(Evento.class, id);
   }
 }

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import es.uc3m.g3.bean.UserBean;
+import es.uc3m.g3.entities.EntidadRol;
 
 public class LoginRequestHandler implements RequestHandlerInterface {
 	private Connection con;
@@ -80,7 +80,10 @@ public class LoginRequestHandler implements RequestHandlerInterface {
 	}
 
 	private void saveUserToSession(HttpServletRequest request, String email, String password){
-		request.getSession().setAttribute("user", new UserBean(email, password));
+		EntidadRol user = new EntidadRol();
+		user.setEmail(email);
+		user.setContraseña(password);
+		request.getSession().setAttribute("user", user);
 	}
 
 }

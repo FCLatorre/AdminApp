@@ -74,9 +74,9 @@ public class RequestController extends HttpServlet {
     
     requestHandlers.put("/login", new LoginRequestHandler(con));
     requestHandlers.put("/users", new UserRequestHandler(em, ut));
-    requestHandlers.put("/events", new EventsRequestHandler());
-    requestHandlers.put("/eventdetail", new EventDetailRequestHandler());
-    requestHandlers.put("/delete/eventdetail", new EventDetailRequestHandler());
+    requestHandlers.put("/events", new EventsRequestHandler(em, ut));
+    requestHandlers.put("/eventdetail", new EventDetailRequestHandler(em, ut));
+    requestHandlers.put("/delete/eventdetail", new EventDetailRequestHandler(em, ut));
     requestHandlers.put("/conversations", new ConversationsRequestHandler(em, ut));
     requestHandlers.put("/logout", new LogoutRequestHandler());
   }

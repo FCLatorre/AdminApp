@@ -1,22 +1,30 @@
 package es.uc3m.g3.handlers;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.UserTransaction;
 
-import es.uc3m.g3.bean.EventBean;
+import es.uc3m.g3.entities.Evento;
 
 public class EventsRequestHandler implements RequestHandlerInterface {
+	private EntityManager em;
+	private UserTransaction ut;
 
-  @Override
-  public String handleGETRequest(HttpServletRequest request,
-                              HttpServletResponse response) {
-	  System.out.println("Handling the request in EventsRequestHandler");
-	  request.setAttribute("events", getEvents());
-	  return "events.jsp";
-  }
+	public EventsRequestHandler (EntityManager em, UserTransaction ut){
+		this.em = em;
+		this.ut = ut;
+	}
+	@Override
+	public String handleGETRequest(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("Handling the request in EventsRequestHandler");
+		request.setAttribute("events", getEvents());
+		return "events.jsp";
+	}
 
   @Override
   public String handlePOSTRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -31,21 +39,12 @@ public class EventsRequestHandler implements RequestHandlerInterface {
       return handleGETRequest(request, response);
   }
 
-  private ArrayList<EventBean> getEvents() {
-	    ArrayList<EventBean> events = new ArrayList<EventBean>();
-
-	    Date date = new Date();
-
-	    events.add(new EventBean("id001", "event1", "Description of event1", date,
-	                             "UC3M", "hall1", "/images/image1.png", (short) 2, 6.25,
-	                             "CATEGORY"));
-	    events.add(new EventBean("id002", "event2", "Description of event2", date,
-	                             "UC3M2", "hall2", "/images/image2.png", (short) 2, 6.25,
-	                             "CATEGORY"));
-	    events.add(new EventBean("id003", "event3", "Description of event3", date,
-	                             "UC3M3", "hall3", "/images/image3.png", (short) 2, 6.25,
-	                             "CATEGORY"));
-
-	    return events;
+  private ArrayList<Evento> getEvents() {
+	    Query query = em.createNamedQuery("Evento.findAll");
+		List<Evento> events = query.getResultList();
+		/*for(Evento event : events) {
+			System.out.println(conversation.getEntidadAdministrador().getNombre()+conversation.getEntidadUsuario().getNombre());
+		}*/
+		return new ArrayList<Evento> (events);
 	  }
 }
