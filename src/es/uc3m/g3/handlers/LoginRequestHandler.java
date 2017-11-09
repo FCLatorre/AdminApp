@@ -82,7 +82,6 @@ public class LoginRequestHandler implements RequestHandlerInterface {
 	private void saveUserToSession(HttpServletRequest request, String email, String password){
 		EntidadRol user = new EntidadRol();
 		user.setEmail(email);
-		user.setContraseña(password);
 		request.getSession().setAttribute("user", user);
 	}
 
