@@ -31,19 +31,19 @@ public class ConversationsRequestHandler implements RequestHandlerInterface {
 	@Override
 	public String handlePOSTRequest(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		return null;
+		return handleGETRequest(request, response);
 	}
 
 	@Override
 	public String handlePUTRequest(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		return null;
+		return handleGETRequest(request, response);
 	}
 
 	@Override
 	public String handleDELETERequest(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		return null;
+		return handleGETRequest(request, response);
 	}
 	
 	private ArrayList<Conversacion> getConversations (){
