@@ -29,6 +29,14 @@ public class EntidadUsuario implements Serializable {
 	@OneToMany(mappedBy="entidadUsuario")
 	private List<Conversacion> conversacions;
 
+	//bi-directional many-to-one association to Evento
+	@OneToMany(mappedBy="entidadUsuario")
+	private List<Evento> eventos;
+
+	//bi-directional many-to-one association to Recibo
+	@OneToMany(mappedBy="entidadUsuario")
+	private List<Recibo> recibos;
+
 	public EntidadUsuario() {
 	}
 
@@ -76,6 +84,50 @@ public class EntidadUsuario implements Serializable {
 		conversacion.setEntidadUsuario(null);
 
 		return conversacion;
+	}
+
+	public List<Evento> getEventos() {
+		return this.eventos;
+	}
+
+	public void setEventos(List<Evento> eventos) {
+		this.eventos = eventos;
+	}
+
+	public Evento addEvento(Evento evento) {
+		getEventos().add(evento);
+		evento.setEntidadUsuario(this);
+
+		return evento;
+	}
+
+	public Evento removeEvento(Evento evento) {
+		getEventos().remove(evento);
+		evento.setEntidadUsuario(null);
+
+		return evento;
+	}
+
+	public List<Recibo> getRecibos() {
+		return this.recibos;
+	}
+
+	public void setRecibos(List<Recibo> recibos) {
+		this.recibos = recibos;
+	}
+
+	public Recibo addRecibo(Recibo recibo) {
+		getRecibos().add(recibo);
+		recibo.setEntidadUsuario(this);
+
+		return recibo;
+	}
+
+	public Recibo removeRecibo(Recibo recibo) {
+		getRecibos().remove(recibo);
+		recibo.setEntidadUsuario(null);
+
+		return recibo;
 	}
 
 }

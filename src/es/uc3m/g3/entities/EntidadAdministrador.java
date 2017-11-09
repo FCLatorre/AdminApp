@@ -18,7 +18,7 @@ public class EntidadAdministrador implements Serializable {
 	@Id
 	@Column(name="Id")
 	private String id;
-	
+
 	@Column(name="Nombre")
 	private String nombre;
 
@@ -36,7 +36,7 @@ public class EntidadAdministrador implements Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public String getNombre() {
 		return this.nombre;
 	}
