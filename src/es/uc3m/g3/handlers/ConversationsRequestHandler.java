@@ -50,7 +50,7 @@ public class ConversationsRequestHandler implements RequestHandlerInterface {
 		Query query = em.createNamedQuery("Conversacion.findAll");
 		List<Conversacion> conversations = query.getResultList();
 		for(Conversacion conversation : conversations) {
-			System.out.println(conversation.getEntidadAdministrador().getId()+conversation.getEntidadUsuario().getNombre());
+			System.out.println(conversation.getEntidadAdministrador().getNombre()+conversation.getEntidadUsuario().getNombre());
 		}
 		return new ArrayList<Conversacion> (conversations);
 	}

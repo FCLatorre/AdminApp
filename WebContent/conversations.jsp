@@ -42,7 +42,7 @@
                         <tr>
                           <td class="mdl-data-table__cell--non-numeric"><%=conver.getId()%></td>
                           <td class="mdl-data-table__cell--non-numeric"><%=conver.getEntidadUsuario().getNombre()%></td>
-                          <td class="mdl-data-table__cell--non-numeric"><%=conver.getEntidadAdministrador().getId()%></td>
+                          <td class="mdl-data-table__cell--non-numeric"><%=conver.getEntidadAdministrador().getNombre()%></td>
                           <td>
                             <a href="conversationdetail?id=<%=conver.getId()%>"><button class="mdl-button mdl-js-button mdl-button--icon">
                               <i class="material-icons">remove_red_eye</i>
