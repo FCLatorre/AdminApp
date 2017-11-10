@@ -34,7 +34,7 @@
 	      		<span class="visuallyhidden">Accounts</span>
     		</button>
             <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
-                <li class="mdl-menu__item"><a href="logout"><i class="material-icons">exit</i>Logout </a></li>
+                <li class="mdl-menu__item"><a href="logout" style="text-decoration:none;"><i class="material-icons">exit</i>Logout </a></li>
             </ul>
         </div>
     </header>

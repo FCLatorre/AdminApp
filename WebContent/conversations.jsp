@@ -20,8 +20,8 @@
             <jsp:param name="title" value="Conversations"/>
         </jsp:include>
         <main class="mdl-layout__content mdl-color--grey-100">
-            <div class="mdl-grid demo-content center-items">
-                <div class="mdl-cell--8-col mdl-cell--2-offset">
+            <div class="mdl-grid demo-content">
+                <div class="mdl-cell--12-col" style="overflow-x:auto;">
                   <h2 class="mdl-card__title-text">Listado de conversaciones</h2>
                   	<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--4dp">
                     <thead>
