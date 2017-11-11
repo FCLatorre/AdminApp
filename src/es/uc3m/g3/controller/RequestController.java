@@ -111,7 +111,15 @@ public class RequestController extends HttpServlet {
     if (deletePath != -1) {
       redirect = rhi.handleDELETERequest(request, response);
     } else {
-      redirect = rhi.handlePOSTRequest(request, response);
+    	if(request.getSession().getAttribute("redirected") != null){
+    		System.out.println("Coming from redirection, so calling GET");
+    		request.getSession().setAttribute("redirected", null);
+    		redirect = rhi.handleGETRequest(request, response);
+    	} else {
+
+    		System.out.println("Calling POST");
+    		redirect = rhi.handlePOSTRequest(request, response);
+    	}
     }
 
     //response.sendRedirect(redirect);
