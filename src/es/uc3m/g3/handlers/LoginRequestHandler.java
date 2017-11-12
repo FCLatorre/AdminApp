@@ -35,6 +35,8 @@ public class LoginRequestHandler implements RequestHandlerInterface {
 			request.getSession().setAttribute("from", null);
 			if(newURL==null){
 				newURL="users";
+			} else {
+				request.getSession().setAttribute("redirected", true);
 			}
 			return newURL;
 		}else{

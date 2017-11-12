@@ -8,6 +8,8 @@ import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.NotSupportedException;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 import es.uc3m.g3.entities.Categoria;
@@ -25,7 +27,7 @@ public class EventDetailRequestHandler implements RequestHandlerInterface {
   public String handleGETRequest(HttpServletRequest request,
                                  HttpServletResponse response) {
     System.out.println("Handling the request in EventDetailGETRequestHandler");
-    String id = request.getParameter("id");
+    int id = Integer.parseInt((String)request.getParameter("id"));
     request.setAttribute("event", getEventById(id));
     return "eventdetail.jsp";
   }
@@ -80,14 +82,28 @@ public class EventDetailRequestHandler implements RequestHandlerInterface {
   @Override
   public String handleDELETERequest(HttpServletRequest request, HttpServletResponse response) {
     System.out.println("Handling the request in EventDetailDELETERequestHandler");
-    String id = (String)request.getParameter("id");
+    int id = Integer.parseInt((String)request.getParameter("id"));
     Evento event = getEventById(id);
-    em.remove(event);
-    System.out.println("Deleting event" + id);
+    System.out.println("Event:" + event);
+    try {
+	    System.out.println("Objects:" + em +ut);
+		//this.ut.begin();
+	    this.em.getTransaction().begin();
+			this.em.remove(event);
+		this.em.getTransaction().commit();
+	    //this.ut.commit();
+	    System.out.println("Deleting event" + id);
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+	    System.out.println("Can't delete event with id:" + id);
+		e.printStackTrace();
+	}
+    
+
     return "events";
   }
 
-  private Evento getEventById(String id) {
+  private Evento getEventById(int id) {
     return em.find(Evento.class, id);
   }
 }

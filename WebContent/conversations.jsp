@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<<<<<<< HEAD
 <%@ page import="java.util.*,es.uc3m.g3.entities.Conversacion" %>
-=======
-<%@ page import="java.util.*,es.uc3m.g3.bean.MessageBean" %>
->>>>>>> feature/ChatManagement
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -25,6 +21,7 @@
     <jsp:include page="header.jsp">
             <jsp:param name="title" value="Chat"/>
         </jsp:include>
+<<<<<<< HEAD
     <main class="mdl-layout__content mdl-color--grey-100">
       <div class="mdl-grid demo-content center-items">
         <div id="conversations" class="mdl-cell--3-col">
@@ -43,6 +40,26 @@
             <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
               <i class="material-icons">more_vert</i>
             </button>
+=======
+        <main class="mdl-layout__content mdl-color--grey-100">
+            <div class="mdl-grid demo-content">
+                <div class="mdl-cell--12-col" style="overflow-x:auto;">
+                  <h2 class="mdl-card__title-text">Listado de conversaciones</h2>
+                  	<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--4dp">
+                    <thead>
+                      <tr>
+                        <th class="mdl-data-table__cell--non-numeric">Id</th>
+                        <th class="mdl-data-table__cell--non-numeric">Usuario</th>
+                        <th class="mdl-data-table__cell--non-numeric">Administrador</th>
+                        <th></th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <%
+            	         ArrayList<Conversacion> conversations = (ArrayList<Conversacion>) request.getAttribute("conversations");
+            	          for(Conversacion conver : conversations) { %>
+>>>>>>> fd9f49633696348ef2e53040359e6bcd558decc7
 
             <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
                 for="demo-menu-lower-right">

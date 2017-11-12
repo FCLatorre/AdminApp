@@ -41,7 +41,8 @@ public class LoggedUserFilter implements Filter {
 			chain.doFilter(request, response);
 		} else {
 			System.out.println("No logged user, redirecting to login");
-			httpRequest.getSession().setAttribute("from", httpRequest.getServletPath());
+			System.out.println("Saved url:"+httpRequest.getServletPath()+httpRequest.getQueryString());
+			httpRequest.getSession().setAttribute("from", httpRequest.getServletPath()+"?"+httpRequest.getQueryString());
 			request.getRequestDispatcher("/login").forward(httpRequest, response);
 		}
 	}
