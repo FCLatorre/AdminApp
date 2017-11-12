@@ -15,7 +15,7 @@
 		<class>es.uc3m.g3.entities.Recibo</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="FINE"/>
-			<property name="javax.persistence.schema-generation.database.action" value="none"/>
+			<property name="javax.persistence.schema-generation.database.action" value="create"/>
 			<property name="eclipselink.logging.parameters" value="true"/>
 		</properties>
 	</persistence-unit>

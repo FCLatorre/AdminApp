@@ -36,15 +36,15 @@ public class RequestController extends HttpServlet {
   private static final long serialVersionUID = 1L;
   private HashMap<String, RequestHandlerInterface> requestHandlers = new HashMap<String, RequestHandlerInterface>();
   private Connection con;
-  
+
   private EntityManagerFactory factory;
-  
+
   @PersistenceContext(unitName="tiwgrupo3")
   private EntityManager em;
-  
+
   @Resource
   private UserTransaction ut;
-  
+
   /*
   private String serverName = "localhost";
   private String port = "3306";
@@ -64,20 +64,21 @@ public class RequestController extends HttpServlet {
     	DataSource ds = (DataSource) ctx.lookup("jdbc/tiwgrupo3DataSource");
     	con = ds.getConnection();
     	System.out.println("Sucessful connection");
-    } 
+    }
     catch (Exception e) {
     	System.out.println("Error when connecting to the database ");
     }
-    
+
     factory = Persistence.createEntityManagerFactory("tiwgrupo3");
     em = factory.createEntityManager();
-    
+
     requestHandlers.put("/login", new LoginRequestHandler(con));
     requestHandlers.put("/users", new UserRequestHandler(em, ut));
     requestHandlers.put("/events", new EventsRequestHandler(em, ut));
     requestHandlers.put("/eventdetail", new EventDetailRequestHandler(em, ut));
     requestHandlers.put("/delete/eventdetail", new EventDetailRequestHandler(em, ut));
-    requestHandlers.put("/conversations", new ConversationsRequestHandler(em, ut));
+    requestHandlers.put("/conversations",
+                        new ConversationsRequestHandler(em, ut));
     requestHandlers.put("/logout", new LogoutRequestHandler());
   }
 
@@ -117,7 +118,7 @@ public class RequestController extends HttpServlet {
     //response.sendRedirect(redirect);
     request.getRequestDispatcher(redirect).forward(request, response);
   }
-  
+
   public void destroy(){
 	  try {
 			System.out.println("Closing the database connection...");
