@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="java.util.*,es.uc3m.g3.entities.Evento" %>
+<%@ page import="java.util.*,es.uc3m.g3.models.Event" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -24,10 +24,10 @@
         <main class="mdl-layout__content mdl-color--grey-100">
             <div class="mdl-grid demo-content">
                 <form class="mdl-cell--8-col mdl-cell--2-offset" id="event-form">
-                <%Evento event = (Evento) request.getAttribute("event"); %>
+                <%Event event = (Event) request.getAttribute("event"); %>
                 <%SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy"); %>
                     <hgroup class="mdl-card__title">
-                        <h2 class="mdl-card__title-text">Estos son los datos de&nbsp;<b><%=event.getTitulo()%></b></h2>
+                        <h2 class="mdl-card__title-text">Estos son los datos de&nbsp;<b><%=event.getTitle()%></b></h2>
                     </hgroup>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" pattern="([A-Z,a-z]*\d*)*" name="id" value="<%=event.getId()%>" readonly/>
@@ -35,37 +35,37 @@
                         <span class="mdl-textfield__error">Introduzca un nombre sin espacios ni sÃ­mbolos.</span>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" pattern="([A-Z,a-z]*\d*)*" name="eventName" value="<%=event.getTitulo()%>" readonly/>
+                        <input class="mdl-textfield__input" type="text" pattern="([A-Z,a-z]*\d*)*" name="eventName" value="<%=event.getTitle()%>" readonly/>
                         <label class="mdl-textfield__label" for="eventName">Nombre del evento</label>
                         <span class="mdl-textfield__error">Introduzca un nombre sin espacios ni sÃ­mbolos.</span>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" pattern="([A-Z,a-z]+\s?)*" name="category" value="<%=event.getCategoriaBean()%>" readonly/>
+                        <input class="mdl-textfield__input" type="text" pattern="([A-Z,a-z]+\s?)*" name="category" value="<%=event.getCategoryBean().getName()%>" readonly/>
                         <label class="mdl-textfield__label" for="category">CategorÃ­a</label>
                         <span class="mdl-textfield__error">Introduzca una palabra o frase, sin sÃ­mbolos ni dÃ­gitos.</span>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" pattern="^[0-9]{2}([.][0-9]{2})?" name="price" value="<%=event.getPrecio()%>" readonly/>
+                        <input class="mdl-textfield__input" type="text" pattern="^[0-9]{2}([.][0-9]{2})?" name="price" value="<%=event.getPrice()%>" readonly/>
                         <label class="mdl-textfield__label" for="price">Precio</label>
                         <span class="mdl-textfield__error">Introduzca el precio del evento con punto como separaciï¿½n decimal.</span>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" pattern="\d{2}/\d{2}/\d{4}" name="date" value="<%=df.format(event.getFecha())%>" readonly/>
+                        <input class="mdl-textfield__input" type="text" pattern="\d{2}/\d{2}/\d{4}" name="date" value="<%=df.format(event.getDate())%>" readonly/>
                         <label class="mdl-textfield__label" for="date">Fecha y hora</label>
                         <span class="mdl-textfield__error">Introduzca la fecha en el sigueinte formato: dd/mm/yyyy</span>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" name="location" value="<%=event.getLocalizacion()%>" readonly/>
+                        <input class="mdl-textfield__input" type="text" name="location" value="<%=event.getLocation()%>" readonly/>
                         <label class="mdl-textfield__label" for="location">LocalizaciÃ³n</label>
                         <span class="mdl-textfield__error">Only alphabet and no spaces, please!</span>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" name="hall" value="<%=event.getSala()%>" readonly/>
+                        <input class="mdl-textfield__input" type="text" name="hall" value="<%=event.getRoom()%>" readonly/>
                         <label class="mdl-textfield__label" for="halle">Sala</label>
                         <span class="mdl-textfield__error">Only alphabet and no spaces, please!</span>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" pattern="\d*" name="tickets" value="<%=event.getNumeroEntradas()%>" readonly/>
+                        <input class="mdl-textfield__input" type="text" pattern="\d*" name="tickets" value="<%=event.getTickets()%>" readonly/>
                         <label class="mdl-textfield__label" for="tickets">Entradas restantes</label>
                         <span class="mdl-textfield__error">Introduzca un nÃºmero sin decimales ni espacios.</span>
                     </div>
@@ -75,7 +75,7 @@
                     </div>
                     <div class = "mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                      <textarea class = "mdl-textfield__input" type="text" rows= "5"
-                        name="description" readonly><%=event.getDescripcion()%></textarea>
+                        name="description" readonly><%=event.getDescription()%></textarea>
                       <label class="mdl-textfield__label" for="description">Descripción</label>
                       <span class="mdl-textfield__error">Introduzca la descripción</span>
                   </div>

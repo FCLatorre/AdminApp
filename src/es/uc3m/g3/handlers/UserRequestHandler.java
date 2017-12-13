@@ -1,22 +1,18 @@
 package es.uc3m.g3.handlers;
 
-import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.transaction.UserTransaction;
 
-import es.uc3m.g3.models.EntidadUsuario;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+
+import es.uc3m.g3.models.User;
 
 public class UserRequestHandler implements RequestHandlerInterface {
-	private EntityManager em;
-	private UserTransaction ut;
-
-	public UserRequestHandler (EntityManager em, UserTransaction ut){
-		this.em = em;
-		this.ut = ut;
-	}
+	
 	@Override
 	public String handleGETRequest(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("Handling the request in UserRequestHandler");
@@ -36,13 +32,15 @@ public class UserRequestHandler implements RequestHandlerInterface {
 	public String handleDELETERequest(HttpServletRequest request, HttpServletResponse response) {
 		return handleGETRequest(request, response);
 	}
-	public List<EntidadUsuario> findAllUsers(int page) {
+	public List<User> findAllUsers(int page) {
 		System.out.println("Iniciando findAllUsers");
-		System.out.println("Entity Manager:" + em);
-		Query query = em.createNamedQuery("EntidadUsuario.findAll");
-		List<EntidadUsuario> users = query.getResultList();
-		for(EntidadUsuario user : users) {
-			System.out.println(user.getNombre()+user.getApellidos()+user.getId());
+		Client client = ClientBuilder.newClient();
+		List<User> users = new ArrayList<User>();
+		WebTarget webResource = client.target("http://localhost:13305").path("/api/users");
+		
+		users = webResource.request().accept("application/json").get(java.util.ArrayList.class);
+		for(User user : users) {
+			System.out.println(user.getName()+user.getSurename()+user.getId());
 		}
 		return users;
 	}

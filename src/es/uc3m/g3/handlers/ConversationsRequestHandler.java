@@ -9,18 +9,16 @@ import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.UserTransaction;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 
-import es.uc3m.g3.models.Conversacion;
-import es.uc3m.g3.models.EntidadUsuario;
-import es.uc3m.g3.models.Mensaje;
+import es.uc3m.g3.models.Conversation;
+import es.uc3m.g3.models.User;
+import es.uc3m.g3.models.Message;
 
 public class ConversationsRequestHandler implements RequestHandlerInterface {
-  private EntityManager em;
-  private UserTransaction ut;
-  public ConversationsRequestHandler(EntityManager em, UserTransaction ut) {
-    this.em = em;
-    this.ut = ut;
-  }
+  
   @Override
   public String handleGETRequest(HttpServletRequest request,
                                  HttpServletResponse response) {
@@ -50,14 +48,13 @@ public class ConversationsRequestHandler implements RequestHandlerInterface {
     return handleGETRequest(request, response);
   }
 
-  private ArrayList<Conversacion> getConversations() {
-    Query query = em.createNamedQuery("Conversacion.findAll");
-    List<Conversacion> conversations = query.getResultList();
-    for (Conversacion conversation : conversations) {
-      System.out.println(conversation.getEntidadAdministrador().getNombre() +
-                         conversation.getEntidadUsuario().getNombre());
-    }
-    return new ArrayList<Conversacion>(conversations);
+  private List<Conversation> getConversations() {
+	Client client = ClientBuilder.newClient(); 
+    List<Conversation> conversations = new ArrayList<Conversation>();
+    WebTarget webResource = client.target("http://localhost:13305").path("/api/events");
+    conversations = webResource.request().accept("application/json").get(java.util.ArrayList.class);
+	
+    return conversations;
   }
 
   private ArrayList<String> getDiferentConvId() {
@@ -71,7 +68,7 @@ public class ConversationsRequestHandler implements RequestHandlerInterface {
 	  return null;
   }
 
-  private ArrayList<Mensaje> getConversationsById(String id) {
+  private ArrayList<Message> getConversationsById(String id) {
     /*ArrayList<Mensaje> messages = new ArrayList<Mensaje>();
     for (Mensaje m : getConversations()) {
       if (m.getIdConversation().equals(id)) {

@@ -1,4 +1,4 @@
-<%@ page import="java.util.*,es.uc3m.g3.entities.EntidadRol" %>
+<%@ page import="java.util.*,es.uc3m.g3.models.User" %>
 <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
     <div class="mdl-layout__header-row">
         <span class="mdl-layout-title"><%= request.getParameter("title")%></span>
@@ -26,7 +26,7 @@
     <header class="demo-drawer-header">
         <img src="images/user.jpg" class="demo-avatar">
         <div class="demo-avatar-dropdown">
-        	<% EntidadRol user = (EntidadRol) request.getSession().getAttribute("user");%>
+        	<% User user = (User) request.getSession().getAttribute("user");%>
             <span> <%= user.getEmail()%> </span>
             <div class="mdl-layout-spacer"></div>
             <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">

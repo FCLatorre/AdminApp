@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="java.util.*,es.uc3m.g3.entities.EntidadUsuario" %>
+<%@ page import="java.util.*,es.uc3m.g3.models.User" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -34,12 +34,12 @@
                     </thead>
                     <tbody>
                       <%
-            	         List<EntidadUsuario> users = (List<EntidadUsuario>) request.getAttribute("users");
-            	          for(EntidadUsuario user : users) { %>
+            	         List<User> users = (List<User>) request.getAttribute("users");
+            	          for(User user : users) { %>
 
                         <tr>
-                          <td class="mdl-data-table__cell--non-numeric"><%=user.getNombre()%></td>
-                          <td class="mdl-data-table__cell--non-numeric"><%=user.getApellidos()%></td>
+                          <td class="mdl-data-table__cell--non-numeric"><%=user.getName()%></td>
+                          <td class="mdl-data-table__cell--non-numeric"><%=user.getSurename()%></td>
                           <td>
                             <a href="userdetail?id=<%=user.getId()%>"><button class="mdl-button mdl-js-button mdl-button--icon">
                               <i class="material-icons">remove_red_eye</i>

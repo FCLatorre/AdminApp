@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="java.util.*,es.uc3m.g3.entities.Evento" %>
+<%@ page import="java.util.*,es.uc3m.g3.models.Event" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -38,16 +38,16 @@
                     </thead>
                     <tbody>
                       <%
-            	         ArrayList<Evento> events = (ArrayList<Evento>) request.getAttribute("events");
-            	          for(Evento event : events) { %>
+            	         ArrayList<Event> events = (ArrayList<Event>) request.getAttribute("events");
+            	          for(Event event : events) { %>
 
                         <tr>
-                          <td class="mdl-data-table__cell--non-numeric"><%=event.getTitulo()%></td>
-                          <td class="mdl-data-table__cell--non-numeric"><%=event.getCategoriaBean().getNombre()%></td>
-                          <td><%=event.getPrecio()%></td>
-                          <td><%=event.getFecha()%></td>
-                          <td class="mdl-data-table__cell--non-numeric"><%=event.getLocalizacion()%>-<%=event.getSala()%></td>
-                          <td><%=event.getNumeroEntradas()%></td>
+                          <td class="mdl-data-table__cell--non-numeric"><%=event.getTitle()%></td>
+                          <td class="mdl-data-table__cell--non-numeric"><%=event.getCategoryBean().getName()%></td>
+                          <td><%=event.getPrice()%></td>
+                          <td><%=event.getDate()%></td>
+                          <td class="mdl-data-table__cell--non-numeric"><%=event.getLocation()%>-<%=event.getRoom()%></td>
+                          <td><%=event.getTickets()%></td>
                           <td>
                             <a href="eventdetail?id=<%=event.getId()%>"><button class="mdl-button mdl-js-button mdl-button--icon">
                               <i class="material-icons">remove_red_eye</i>

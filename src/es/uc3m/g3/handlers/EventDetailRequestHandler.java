@@ -12,8 +12,8 @@ import javax.transaction.NotSupportedException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
-import es.uc3m.g3.models.Categoria;
-import es.uc3m.g3.models.Evento;
+import es.uc3m.g3.models.Category;
+import es.uc3m.g3.models.Event;
 
 public class EventDetailRequestHandler implements RequestHandlerInterface {
 	private EntityManager em;
@@ -34,7 +34,7 @@ public class EventDetailRequestHandler implements RequestHandlerInterface {
 
   @Override
   public String handlePOSTRequest(HttpServletRequest request, HttpServletResponse response) {
-    System.out.println("Handling the request in EventDetailPOSTRequestHandler");
+    /*System.out.println("Handling the request in EventDetailPOSTRequestHandler");
     Evento newEvent = new Evento();
     newEvent.setId(Integer.parseInt(request.getParameter("id")));
     newEvent.setTitulo(request.getParameter("eventName"));
@@ -72,6 +72,7 @@ public class EventDetailRequestHandler implements RequestHandlerInterface {
     System.out.println("Updating event: " + newEvent.getId());
 
     return "eventdetail?id=" + newEvent.getId();
+    */return null;
   }
 
   @Override
@@ -81,7 +82,7 @@ public class EventDetailRequestHandler implements RequestHandlerInterface {
 
   @Override
   public String handleDELETERequest(HttpServletRequest request, HttpServletResponse response) {
-    System.out.println("Handling the request in EventDetailDELETERequestHandler");
+    /*System.out.println("Handling the request in EventDetailDELETERequestHandler");
     int id = Integer.parseInt((String)request.getParameter("id"));
     Evento event = getEventById(id);
     System.out.println("Event:" + event);
@@ -100,10 +101,11 @@ public class EventDetailRequestHandler implements RequestHandlerInterface {
 	}
     
 
-    return "events";
+    return "events";*/return null;
   }
 
-  private Evento getEventById(int id) {
-    return em.find(Evento.class, id);
+  private Event getEventById(int id) {
+    //return em.find(Evento.class, id);
+	  return null;
   }
 }

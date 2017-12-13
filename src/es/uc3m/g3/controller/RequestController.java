@@ -1,27 +1,15 @@
 package es.uc3m.g3.controller;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.HashMap;
 
-import javax.annotation.Resource;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
-import javax.transaction.UserTransaction;
 
 import es.uc3m.g3.handlers.ConversationsRequestHandler;
-import es.uc3m.g3.handlers.EventDetailRequestHandler;
 import es.uc3m.g3.handlers.EventsRequestHandler;
 import es.uc3m.g3.handlers.LoginRequestHandler;
 import es.uc3m.g3.handlers.LogoutRequestHandler;
@@ -35,50 +23,19 @@ import es.uc3m.g3.handlers.UserRequestHandler;
 public class RequestController extends HttpServlet {
   private static final long serialVersionUID = 1L;
   private HashMap<String, RequestHandlerInterface> requestHandlers = new HashMap<String, RequestHandlerInterface>();
-  private Connection con;
 
-  private EntityManagerFactory factory;
-
-  @PersistenceContext(unitName="tiwgrupo3")
-  private EntityManager em;
-
-  @Resource
-  private UserTransaction ut;
-
-  /*
-  private String serverName = "localhost";
-  private String port = "3306";
-  private String database = "tiwgrupo3";
-  private String username = "root";
-  private String password = "admin";
-  */
   /**
    * @see HttpServlet#HttpServlet()
    */
   public RequestController() {
     super();
-    try {
-    	//Class.forName("com.mysql.jdbc.Driver").newInstance();
-    	//con = DriverManager.getConnection("jdbc:mysql://"+ serverName+":"+ port+"/"+database, username, password);
-    	Context ctx = new InitialContext();
-    	DataSource ds = (DataSource) ctx.lookup("jdbc/tiwgrupo3DataSource");
-    	con = ds.getConnection();
-    	System.out.println("Sucessful connection");
-    }
-    catch (Exception e) {
-    	System.out.println("Error when connecting to the database ");
-    }
-
-    factory = Persistence.createEntityManagerFactory("tiwgrupo3");
-    em = factory.createEntityManager();
-
-    requestHandlers.put("/login", new LoginRequestHandler(con));
-    requestHandlers.put("/users", new UserRequestHandler(em, ut));
-    requestHandlers.put("/events", new EventsRequestHandler(em, ut));
-    requestHandlers.put("/eventdetail", new EventDetailRequestHandler(em, ut));
-    requestHandlers.put("/delete/eventdetail", new EventDetailRequestHandler(em, ut));
-    requestHandlers.put("/conversations",
-                        new ConversationsRequestHandler(em, ut));
+    System.out.println("Controller!");
+    requestHandlers.put("/login", new LoginRequestHandler());
+    requestHandlers.put("/users", new UserRequestHandler());
+    requestHandlers.put("/events", new EventsRequestHandler());
+    //requestHandlers.put("/eventdetail", new EventDetailRequestHandler());
+    //requestHandlers.put("/delete/eventdetail", new EventDetailRequestHandler());
+    requestHandlers.put("/conversations", new ConversationsRequestHandler());
     requestHandlers.put("/logout", new LogoutRequestHandler());
   }
 
@@ -125,16 +82,5 @@ public class RequestController extends HttpServlet {
 
     //response.sendRedirect(redirect);
     request.getRequestDispatcher(redirect).forward(request, response);
-  }
-
-  public void destroy(){
-	  try {
-			System.out.println("Closing the database connection...");
-			this.con.close();
-	  } catch (SQLException e) {
-			System.out.println("Error closing database connection!");
-			e.printStackTrace();
-		}
-	  this.factory.close();
   }
 }

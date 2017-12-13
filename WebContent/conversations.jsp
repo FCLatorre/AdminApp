@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="java.util.*,es.uc3m.g3.entities.Conversacion" %>
+<%@ page import="java.util.*,es.uc3m.g3.models.Conversation" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -40,8 +40,8 @@
                    	</thead>
                     <tbody>
                       <%
-            	         ArrayList<Conversacion> conversations = (ArrayList<Conversacion>) request.getAttribute("conversations");
-            	          for(Conversacion conver : conversations) { %>
+            	         ArrayList<Conversation> conversations = (ArrayList<Conversation>) request.getAttribute("conversations");
+            	          for(Conversation conver : conversations) { %>
 
 			            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
 			                for="demo-menu-lower-right">
@@ -53,8 +53,8 @@
 
                         <tr>
                           <td class="mdl-data-table__cell--non-numeric"><%=conver.getId()%></td>
-                          <td class="mdl-data-table__cell--non-numeric"><%=conver.getEntidadUsuario().getNombre()%></td>
-                          <td class="mdl-data-table__cell--non-numeric"><%=conver.getEntidadAdministrador().getNombre()%></td>
+                          <td class="mdl-data-table__cell--non-numeric"><%=conver.getUser1().getName()%></td>
+                          <td class="mdl-data-table__cell--non-numeric"><%=conver.getUser2().getName()%></td>
                           <td>
                             <a href="messages.jsp"><button class="mdl-button mdl-js-button mdl-button--icon">
                               <i class="material-icons">remove_red_eye</i>

@@ -1,21 +1,18 @@
 package es.uc3m.g3.handlers;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 
-import es.uc3m.g3.models.EntidadRol;
+import es.uc3m.g3.models.User;
 
 public class LoginRequestHandler implements RequestHandlerInterface {
-	private Connection con;
 	
-	public LoginRequestHandler(Connection con){
+	
+	public LoginRequestHandler(){
 		super();
-		this.con = con;
 	}
 	@Override
 	public String handleGETRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -27,10 +24,10 @@ public class LoginRequestHandler implements RequestHandlerInterface {
 			request.setAttribute("nologin", "No parameters where received");
 			return "login.jsp";
 		}
-
-		if(checkLogin(email, password)){
+		User user = getUser(email, password);
+		if(user!=null){
 			System.out.println("LoginRequestHandler: login correct!");
-			saveUserToSession(request, email, password);
+			saveUserToSession(request, user);
 			String newURL = (String) request.getSession().getAttribute("from");
 			request.getSession().setAttribute("from", null);
 			if(newURL==null){
@@ -58,32 +55,18 @@ public class LoginRequestHandler implements RequestHandlerInterface {
 		return handleGETRequest(request, response);
 	}
 
-	private boolean checkLogin (String email, String password){
-		try{
-			PreparedStatement ps = con.prepareStatement("select * from EntidadAdministrador where Id=SHA1(?)");
-			ps.setString(1, email);
-			ResultSet rs = ps.executeQuery();
-			if(rs.next()){
-				System.out.println("El usuario es un administrador. Recuperando información de login...");
-				ps = con.prepareStatement("select * from EntidadRol where Email=? and Contraseña=SHA1(?)");
-				ps.setString(1, email);
-				ps.setString(2, password);
-				rs = ps.executeQuery();
-				boolean bool = rs.next()!=false;
-				ps.close();
-				return bool;
-			} else {
-				System.out.println("El usuario no es un administrador de esta aplicación");
-				return false;
-			}
-		} catch (SQLException e){
-			return false;
-		}
+	private User getUser (String email, String password){
+		Client client = ClientBuilder.newClient();
+		WebTarget webResource = client.target("http://localhost:13305").path("/api/users")
+				.queryParam("email", email)
+				.queryParam("password", password);
+		
+		User user = webResource.request().accept("application/json").get(User.class);
+		System.out.println("Returning value:"+ user.getEmail()+user.getPassword());
+		return user;
 	}
 
-	private void saveUserToSession(HttpServletRequest request, String email, String password){
-		EntidadRol user = new EntidadRol();
-		user.setEmail(email);
+	private void saveUserToSession(HttpServletRequest request, User user){
 		request.getSession().setAttribute("user", user);
 	}
 

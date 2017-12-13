@@ -3,22 +3,16 @@ package es.uc3m.g3.handlers;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.UserTransaction;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 
-import es.uc3m.g3.models.Evento;
+import es.uc3m.g3.models.Event;
 
 public class EventsRequestHandler implements RequestHandlerInterface {
-  private EntityManager em;
-  private UserTransaction ut;
-
-  public EventsRequestHandler(EntityManager em, UserTransaction ut) {
-    this.em = em;
-    this.ut = ut;
-  }
+  
   @Override
   public String handleGETRequest(HttpServletRequest request,
                                  HttpServletResponse response) {
@@ -43,12 +37,11 @@ public class EventsRequestHandler implements RequestHandlerInterface {
     return handleGETRequest(request, response);
   }
 
-  private ArrayList<Evento> getEvents() {
-    Query query = em.createNamedQuery("Evento.findAll");
-    List<Evento> events = query.getResultList();
-    /*for(Evento event : events) {
-            System.out.println(conversation.getEntidadAdministrador().getNombre()+conversation.getEntidadUsuario().getNombre());
-    }*/
-    return new ArrayList<Evento>(events);
+  private List<Event> getEvents() {
+	Client client = ClientBuilder.newClient();
+	List<Event> events = new ArrayList<Event>();
+	WebTarget webResource = client.target("http://localhost:13305").path("/api/events");
+	events = webResource.request().accept("application/json").get(java.util.ArrayList.class);
+	return events;
   }
 }
