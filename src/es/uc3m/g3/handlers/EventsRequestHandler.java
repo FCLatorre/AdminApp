@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.UserTransaction;
 
-import es.uc3m.g3.entities.Evento;
+import es.uc3m.g3.models.Evento;
 
 public class EventsRequestHandler implements RequestHandlerInterface {
   private EntityManager em;

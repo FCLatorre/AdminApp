@@ -10,10 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.UserTransaction;
 
-import es.uc3m.g3.entities.Conversacion;
-import es.uc3m.g3.entities.EntidadUsuario;
-
-import es.uc3m.g3.bean.MessageBean;
+import es.uc3m.g3.models.Conversacion;
+import es.uc3m.g3.models.EntidadUsuario;
+import es.uc3m.g3.models.Mensaje;
 
 public class ConversationsRequestHandler implements RequestHandlerInterface {
   private EntityManager em;
@@ -62,22 +61,24 @@ public class ConversationsRequestHandler implements RequestHandlerInterface {
   }
 
   private ArrayList<String> getDiferentConvId() {
-    ArrayList<String> convs = new ArrayList<String>();
-    for (MessageBean m : getConversations()) {
+    /*ArrayList<String> convs = new ArrayList<String>();
+    for (Mensaje m : getConversations()) {
       if (!convs.contains(m.getIdConversation())) {
         convs.add(m.getIdConversation());
       }
     }
-    return convs;
+    return convs;*/
+	  return null;
   }
 
-  private ArrayList<MessageBean> getConversationsById(String id) {
-    ArrayList<MessageBean> messages = new ArrayList<MessageBean>();
-    for (MessageBean m : getConversations()) {
+  private ArrayList<Mensaje> getConversationsById(String id) {
+    /*ArrayList<Mensaje> messages = new ArrayList<Mensaje>();
+    for (Mensaje m : getConversations()) {
       if (m.getIdConversation().equals(id)) {
         messages.add(m);
       }
     }
-    return messages;
+    return messages;*/
+	  return null;
   }
 }

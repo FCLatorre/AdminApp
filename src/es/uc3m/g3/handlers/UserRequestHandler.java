@@ -6,7 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.transaction.UserTransaction;
-import es.uc3m.g3.entities.EntidadUsuario;
+
+import es.uc3m.g3.models.EntidadUsuario;
 
 public class UserRequestHandler implements RequestHandlerInterface {
 	private EntityManager em;

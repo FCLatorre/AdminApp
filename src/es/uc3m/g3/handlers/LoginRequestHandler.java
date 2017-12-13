@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import es.uc3m.g3.entities.EntidadRol;
+import es.uc3m.g3.models.EntidadRol;
 
 public class LoginRequestHandler implements RequestHandlerInterface {
 	private Connection con;

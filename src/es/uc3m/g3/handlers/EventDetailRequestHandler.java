@@ -12,8 +12,8 @@ import javax.transaction.NotSupportedException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
-import es.uc3m.g3.entities.Categoria;
-import es.uc3m.g3.entities.Evento;
+import es.uc3m.g3.models.Categoria;
+import es.uc3m.g3.models.Evento;
 
 public class EventDetailRequestHandler implements RequestHandlerInterface {
 	private EntityManager em;
