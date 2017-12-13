@@ -1,16 +1,16 @@
-<%@ page import="java.util.*,es.uc3m.g3.bean.*" %>
-<%ArrayList<MessageBean> messages = (ArrayList<MessageBean>) request.getAttribute("messages");%>
-<%UserBean user = (UserBean) request.getSession().getAttribute("user");%>
-<%String email = user.getEmail();%>
+<%@ page import="java.util.*,es.uc3m.g3.entities.*" %>
+<%ArrayList<Mensaje> messages = (ArrayList<Mensaje>) request.getAttribute("messages");%>
+<%EntidadUsuario user = (EntidadUsuario) request.getSession().getAttribute("user");%>
+<%String email = user.getNombre();%>
 
 <div class="wrapper">
   <div class="inner" id="inner">
     <div class="content" id="content">
-      <%for(MessageBean m : messages){%>
-      <div class="message-wrapper <%if(email.equals(m.getIdCreator())) {%>me<%}else{%>them<%}%>">
+      <%for(Mensaje m : messages){%>
+      <div class="message-wrapper <%if(email.equals(m.getEntidadRol().getId())) {%>me<%}else{%>them<%}%>">
         <img src="images/user.jpg" class="demo-avatar circle-wrapper" />
         <div class="text-wrapper">
-          <%=m.getContent()%>
+          <%=m.getContenido()%>
         </div>
       </div>
       <%}%>

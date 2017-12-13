@@ -19,28 +19,11 @@
 
   <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
     <jsp:include page="header.jsp">
-            <jsp:param name="title" value="Chat"/>
-        </jsp:include>
-<<<<<<< HEAD
+        <jsp:param name="title" value="Chat"/>
+    </jsp:include>
     <main class="mdl-layout__content mdl-color--grey-100">
       <div class="mdl-grid demo-content center-items">
         <div id="conversations" class="mdl-cell--3-col">
-
-          <%
-          ArrayList<String> conversations = (ArrayList<String>) request.getAttribute("conversations");
-
-          for(String conv : conversations) {%>
-
-          <div class="conversation <%if (conv.equals(request.getAttribute("id"))) {%>active<%}%>">
-            <a href="conversations?id=<%=conv%>" class="no-style">
-              <img src="images/user.jpg" class="demo-avatar" />
-              <span class="mdl-badge" data-badge="4"><%=conv%></span>
-            </a>
-
-            <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
-              <i class="material-icons">more_vert</i>
-            </button>
-=======
         <main class="mdl-layout__content mdl-color--grey-100">
             <div class="mdl-grid demo-content">
                 <div class="mdl-cell--12-col" style="overflow-x:auto;">
@@ -54,22 +37,38 @@
                         <th></th>
                         <th></th>
                       </tr>
-                    </thead>
+                   	</thead>
                     <tbody>
                       <%
             	         ArrayList<Conversacion> conversations = (ArrayList<Conversacion>) request.getAttribute("conversations");
             	          for(Conversacion conver : conversations) { %>
->>>>>>> fd9f49633696348ef2e53040359e6bcd558decc7
 
-            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-                for="demo-menu-lower-right">
-              <li class="mdl-menu__item">Eliminar chat</li>
-              <li class="mdl-menu__item">Marcar como leído</li>
-              <li disabled class="mdl-menu__item">marcar como no leído</li>
-            </ul>
-          </div>
+			            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+			                for="demo-menu-lower-right">
+			              <li class="mdl-menu__item">Eliminar chat</li>
+			              <li class="mdl-menu__item">Marcar como leído</li>
+			              <li disabled class="mdl-menu__item">marcar como no leído</li>
+			            </ul>
+			          </div>
 
-          <%} %>
+                        <tr>
+                          <td class="mdl-data-table__cell--non-numeric"><%=conver.getId()%></td>
+                          <td class="mdl-data-table__cell--non-numeric"><%=conver.getEntidadUsuario().getNombre()%></td>
+                          <td class="mdl-data-table__cell--non-numeric"><%=conver.getEntidadAdministrador().getNombre()%></td>
+                          <td>
+                            <a href="messages.jsp"><button class="mdl-button mdl-js-button mdl-button--icon">
+                              <i class="material-icons">remove_red_eye</i>
+                            </button></a>
+                          </td>
+                          <td>
+                            <button class="mdl-button mdl-js-button mdl-button--icon">
+                              <i class="material-icons">clear</i>
+                            </button>
+                          </td>
+                        </tr>
+                      <%} %>
+                    </tbody>
+                  </table>
         </div>
         <%if (request.getAttribute("messages") != null) {%>
         <div id="chat-content" class="mdl-cell--9-col">
